@@ -22,9 +22,7 @@ module GithubContributionsGraph
       store = YAML::Store.new "#{name}.yaml"
 
       store.transaction do
-        data.each do |date, value|
-          store[date] = value
-        end
+        data.each { |date, value| store[date] = value }
       end
     end
 
