@@ -9,7 +9,7 @@ module GithubContributionsGraph
     def self.update
       repos.each_pair do |name, repo|
         data = GithubContributionsGraph::Calendar.new(
-          url: repo['url'],
+          url:      repo['url'],
           username: repo['username'],
           password: repo['password']
         )
@@ -19,7 +19,6 @@ module GithubContributionsGraph
     end
 
     def self.write(name, data)
-      puts "writing data for: #{name}"
       store = YAML::Store.new "#{name}.yaml"
 
       store.transaction do
