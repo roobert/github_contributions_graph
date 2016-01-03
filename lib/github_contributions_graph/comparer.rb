@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 #encoding=utf-8
 
+require 'forwardable'
+
 module GithubContributionsGraph
   class Comparer
     attr_accessor :repos
@@ -10,28 +12,29 @@ module GithubContributionsGraph
     end
 
     class Repos
+      extend Forwardable
+
       def initialize(config)
         @repos = load_repos(config)
       end
 
+      def_delegators :@repos, :each, :[]
+
       def load_repos(config)
         config.keys.each_with_index.map do |repo, index|
-          Repo.new(repo, Color.palette(index))
+          Repo.new(repo, Color.palette(index), config[repo])
         end
-      end
-
-      def each
-        @repos.each { |repo| yield repo }
       end
     end
 
     class Repo
-      attr_accessor :name, :days
+      attr_accessor :name, :days, :palette, :config
 
-      def initialize(name, palette)
+      def initialize(name, palette, config)
         @name    = name
         @palette = palette
         @days    = Days.new(name, palette)
+        @config  = config
       end
 
       def to_s
@@ -40,6 +43,8 @@ module GithubContributionsGraph
     end
 
     class Days
+      extend Forwardable
+
       attr_accessor :days
 
       def initialize(name, palette)
@@ -47,9 +52,7 @@ module GithubContributionsGraph
         load_days(name, palette)
       end
 
-      def each
-        @days.each { |day| yield day }
-      end
+      def_delegators :@days, :each
 
       def load_days(name, palette)
         store(name).each do |date, commits|
