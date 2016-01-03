@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 #encoding=utf-8
 
-require 'palenta'
+require 'paleta'
 
 module GithubContributionsGraph
   module Color
