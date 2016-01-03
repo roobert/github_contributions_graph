@@ -1,0 +1,9 @@
+repos:
+  #'work':
+  #  username: '...'
+  #  password: '...'
+  #  url: 'https://git.example.com/users/robw/contributions'
+  'public':
+    url: 'https://github.com/users/roobert/contributions'
+  'matt':
+    url: 'https://github.com/users/matthewfranglen/contributions'

@@ -2,6 +2,7 @@
 #encoding=utf-8
 
 require 'forwardable'
+require 'paint'
 
 module GithubContributionsGraph
   class Repos
@@ -9,13 +10,17 @@ module GithubContributionsGraph
 
     def initialize
       @repos = load_repos(config)
+
+      # TODO
+      #validate_repos
     end
 
     def_delegators :@repos, :each, :[], :select
 
     def load_repos(config)
       config.keys.each_with_index.map do |repo, index|
-        Repo.new(repo, Color.palette(index), config[repo])
+        # index 0 is intermediate palette
+        Repo.new(repo, Color.palette(index + 1), config[repo])
       end
     end
 
@@ -49,7 +54,7 @@ module GithubContributionsGraph
       load_days(name, palette)
     end
 
-    def_delegators :@days, :each, :length
+    def_delegators :@days, :each, :each_with_index, :length, :[], :first
 
     def load_days(name, palette)
       store(name).each do |date, commits|
@@ -63,16 +68,17 @@ module GithubContributionsGraph
   end
 
   class Day
-    attr_accessor :date, :commits
+    attr_accessor :date, :commits, :palette, :winner
 
-    def initialize(date, commits, palette)
+    def initialize(date, commits, palette, winner = nil)
       @date    = date
-      @commits = commits
+      @commits = commits.to_i
       @palette = palette
+      @winner  = winner
     end
 
     def color
-      @color ||= Color.contributions(commits, @palette)
+      @color ||= Color.contributions(commits, palette)
     end
 
     def ==(other)
@@ -80,7 +86,7 @@ module GithubContributionsGraph
     end
 
     def to_s
-      "#{date}: #{commits.ljust(3)} - ##{color.hex}"
+      Paint["#{date}: #{commits.to_s.ljust(3)} #{winner}", "##{color.hex}"]
     end
   end
 end
