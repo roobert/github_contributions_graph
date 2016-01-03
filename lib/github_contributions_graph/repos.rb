@@ -11,7 +11,7 @@ module GithubContributionsGraph
       @repos = load_repos(config)
     end
 
-    def_delegators :@repos, :each, :[]
+    def_delegators :@repos, :each, :[], :select
 
     def load_repos(config)
       config.keys.each_with_index.map do |repo, index|
@@ -49,7 +49,7 @@ module GithubContributionsGraph
       load_days(name, palette)
     end
 
-    def_delegators :@days, :each
+    def_delegators :@days, :each, :length
 
     def load_days(name, palette)
       store(name).each do |date, commits|
