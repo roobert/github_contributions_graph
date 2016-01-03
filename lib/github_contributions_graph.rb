@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # encoding=utf-8
 
-
-module GithubContributionsGraph
-end
+require 'github_contributions_graph/database'
+require 'github_contributions_graph/calendar'
+require 'github_contributions_graph/calendar/login'
