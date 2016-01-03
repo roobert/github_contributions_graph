@@ -60,13 +60,6 @@ module GithubContributionsGraph
       def store(name)
         @store ||= YAML.load_file("#{name}.yaml")
       end
-
-      def to_s
-        result = []
-        days.each do |day|
-          result << day
-        end.join("\n")
-      end
     end
 
     class Day
@@ -82,12 +75,12 @@ module GithubContributionsGraph
         @color ||= Color.contributions(commits, @palette)
       end
 
-      def to_s
-        "#{date}: #{commits} - ##{color.hex}"
-      end
-
       def ==(other)
         commits == other.commits
+      end
+
+      def to_s
+        "#{date}: #{commits.ljust(3)} - ##{color.hex}"
       end
     end
   end
