@@ -8,7 +8,7 @@ module GithubContributionsGraph
   module Database
     def self.update
       repos.each_pair do |name, repo|
-        days = GithubContributionsGraph::Remote.new(
+        days = Remote.new(
           url:      repo['url'],
           username: repo['username'],
           password: repo['password']

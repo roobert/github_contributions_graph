@@ -6,18 +6,17 @@ module GithubContributionsGraph
     attr_accessor :repos
 
     def initialize
-      @repos = Repos.new(config)
-    end
-
-    def config
-      YAML.load_file('config.yml')['repos']
+      @repos = Repos.new(YAML.load_file('config.yml')['repos'])
     end
 
     class Repos
       def initialize(config)
-        @repos = []
-        config.keys.each_with_index do |repo, index|
-          @repos.push Repo.new(repo, GithubContributionsGraph::Color.palette(index))
+        @repos = load_repos(config)
+      end
+
+      def load_repos(config)
+        config.keys.each_with_index.map do |repo, index|
+          Repo.new(repo, Color.palette(index))
         end
       end
 
@@ -80,7 +79,7 @@ module GithubContributionsGraph
       end
 
       def color
-        @color ||= GithubContributionsGraph::Color.contributions(commits, @palette)
+        @color ||= Color.contributions(commits, @palette)
       end
 
       def to_s

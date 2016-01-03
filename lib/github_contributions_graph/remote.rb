@@ -45,9 +45,9 @@ module GithubContributionsGraph
 
     def html
       if @username && @password
-        GithubContributionsGraph::Remote::Login::Auth.data(@url, @username, @password)
+        Remote::Login::Auth.data(@url, @username, @password)
       else
-        GithubContributionsGraph::Remote::Login::Plain.data(@url)
+        Remote::Login::Plain.data(@url)
       end
     end
   end
