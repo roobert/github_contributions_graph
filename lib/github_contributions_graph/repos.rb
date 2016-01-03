@@ -13,14 +13,14 @@ module GithubContributionsGraph
 
     def_delegators :@repos, :each, :[]
 
-    def config
-      YAML.load_file('config.yml')['repos']
-    end
-
     def load_repos(config)
       config.keys.each_with_index.map do |repo, index|
         Repo.new(repo, Color.palette(index), config[repo])
       end
+    end
+
+    def config
+      YAML.load_file('config.yml')['repos']
     end
   end
 
