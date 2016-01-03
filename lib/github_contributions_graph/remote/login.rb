@@ -5,7 +5,7 @@ require 'open-uri'
 require 'mechanize'
 
 module GithubContributionsGraph
-  class Calendar
+  class Remote
     module Login
       module Auth
         private

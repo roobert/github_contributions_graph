@@ -6,7 +6,7 @@ require 'yaml'
 require 'date'
 
 module GithubContributionsGraph
-  class Calendar
+  class Remote
     def initialize(url:, username: nil, password: nil)
       @url      = url
       @username = username
@@ -45,9 +45,9 @@ module GithubContributionsGraph
 
     def html
       if @username && @password
-        GithubContributionsGraph::Calendar::Login::Auth.data(@url, @username, @password)
+        GithubContributionsGraph::Remote::Login::Auth.data(@url, @username, @password)
       else
-        GithubContributionsGraph::Calendar::Login::Plain.data(@url)
+        GithubContributionsGraph::Remote::Login::Plain.data(@url)
       end
     end
   end
