@@ -8,21 +8,21 @@ module GithubContributionsGraph
   module Database
     def self.update
       repos.each_pair do |name, repo|
-        data = GithubContributionsGraph::Calendar.new(
+        days = GithubContributionsGraph::Calendar.new(
           url:      repo['url'],
           username: repo['username'],
           password: repo['password']
         )
 
-        write(name, data)
+        write(name, days)
       end
     end
 
-    def self.write(name, data)
+    def self.write(name, days)
       store = YAML::Store.new "#{name}.yaml"
 
       store.transaction do
-        data.each { |date, value| store[date] = value }
+        days.each { |day, commits| store[day] = commits }
       end
     end
 
