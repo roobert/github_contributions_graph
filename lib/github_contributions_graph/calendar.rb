@@ -9,7 +9,6 @@ module GithubContributionsGraph
   class Calendar
     def initialize(url:, username: nil, password: nil)
       @url      = url
-
       @username = username
       @password = password
 
