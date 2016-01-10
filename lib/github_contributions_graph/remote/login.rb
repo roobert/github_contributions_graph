@@ -10,6 +10,15 @@ module GithubContributionsGraph
       module Auth
         private
 
+        def self.data(url, username, password)
+          agent.get(url)
+          set_fields(username, password)
+          page.body
+        rescue => error
+          puts "failed to fetch data from url '#{url}': #{error}"
+          exit 1
+        end
+
         def self.agent
           @agent ||= Mechanize.new
         end
@@ -25,15 +34,6 @@ module GithubContributionsGraph
         def self.set_fields(username, password)
           form.field_with(name: "login").value    = username
           form.field_with(name: "password").value = password
-        end
-
-        def self.data(url, username, password)
-          agent.get(url)
-          set_fields(username, password)
-          page.body
-        rescue => error
-          puts "failed to fetch data from url '#{url}': #{error}"
-          exit 1
         end
       end
 
