@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 #encoding=utf-8
 
-require 'forwardable'
-require 'paint'
+require "forwardable"
+require "paint"
 
 module GithubContributionsGraph
   class Repos
@@ -25,7 +25,7 @@ module GithubContributionsGraph
     end
 
     def config
-      YAML.load_file('config.yml')['repos']
+      YAML.load_file("config.yml")["repos"]
     end
   end
 

@@ -1,18 +1,17 @@
 #!/usr/bin/env ruby
-#encoding=utf-8
 
-$LOAD_PATH.unshift('lib')
+$LOAD_PATH.unshift("lib")
 
-require 'github_contributions_graph'
+require "github_contributions_graph"
 
 GithubContributionsGraph::Database.update
 repos = GithubContributionsGraph::Repos.new
 
-repo_public = repos.select { |repo| repo.name == 'public' }[0]
-repo_work   = repos.select { |repo| repo.name == 'work' }[0]
+repo_public = repos.select { |repo| repo.name == "public" }[0]
+repo_work   = repos.select { |repo| repo.name == "work" }[0]
 
 if repo_public.days.length != repo_work.days.length
-  fail InputError, 'contributions contain different amount of days'
+  raise InputError, "contributions contain different amount of days"
 end
 
 merged = []

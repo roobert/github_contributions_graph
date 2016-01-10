@@ -1,15 +1,15 @@
 #!/usr/bin/env ruby
 #encoding=utf-8
 
-require 'paleta'
+require "paleta"
 
 module GithubContributionsGraph
   module Color
     # FIXME: at the moment, only support comparing two graphs..
     PALETTES = [
-      '#00ff00',
-      '#0000ff',
-      '#ff0000'
+      "#00ff00",
+      "#0000ff",
+      "#ff0000"
     ]
 
     def self.contributions(commits, palette)

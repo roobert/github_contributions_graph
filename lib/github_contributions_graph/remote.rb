@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 # encoding=utf-8
 
-require 'nokogiri'
-require 'yaml'
-require 'date'
+require "nokogiri"
+require "yaml"
+require "date"
 
 module GithubContributionsGraph
   class Remote
@@ -17,13 +17,13 @@ module GithubContributionsGraph
 
     def doc
       @doc ||= Nokogiri::HTML.parse(html)
-               .css('svg.js-calendar-graph-svg')
+               .css("svg.js-calendar-graph-svg")
                .css('g[transform="translate(20, 20)"] g rect.day')
     end
 
     def days
       @days ||= doc.each_with_object({}) do |node, days|
-        days[Date.parse(node['data-date'], '%Y-%m-%d')] = node['data-count']
+        days[Date.parse(node["data-date"], "%Y-%m-%d")] = node["data-count"]
       end
     end
 
@@ -39,8 +39,8 @@ module GithubContributionsGraph
 
     def validate_auth
       return if @username.nil? && @password.nil?
-      fail ArgumentError, 'username set but no password set' unless @password
-      fail ArgumentError, 'password set but no username set' unless @username
+      raise ArgumentError, "username set but no password set" unless @password
+      raise ArgumentError, "password set but no username set" unless @username
     end
 
     def html

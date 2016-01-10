@@ -1,17 +1,17 @@
 #!/usr/bin/env ruby
 # encoding=utf-8
 
-require 'yaml'
-require 'yaml/store'
+require "yaml"
+require "yaml/store"
 
 module GithubContributionsGraph
   module Database
     def self.update
       repos.each_pair do |name, repo|
         days = Remote.new(
-          url:      repo['url'],
-          username: repo['username'],
-          password: repo['password']
+          url:      repo["url"],
+          username: repo["username"],
+          password: repo["password"]
         )
 
         write(name, days)
@@ -27,7 +27,7 @@ module GithubContributionsGraph
     end
 
     def self.repos
-      YAML.load_file('config.yml')['repos']
+      YAML.load_file("config.yml")["repos"]
     end
   end
 end

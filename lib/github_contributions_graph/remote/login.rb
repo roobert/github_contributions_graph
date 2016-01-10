@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 #encoding=utf-8
 
-require 'open-uri'
-require 'mechanize'
+require "open-uri"
+require "mechanize"
 
 module GithubContributionsGraph
   class Remote
@@ -14,12 +14,22 @@ module GithubContributionsGraph
           @agent ||= Mechanize.new
         end
 
+        def self.form
+          @form ||= agent.page.forms.first
+        end
+
+        def self.page
+          @page ||= form.submit form.buttons.first
+        end
+
+        def self.set_fields(username, password)
+          form.field_with(name: "login").value    = username
+          form.field_with(name: "password").value = password
+        end
+
         def self.data(url, username, password)
-          page = agent.get(url)
-          form = agent.page.forms.first
-          form.field_with(name: 'login').value = username
-          form.field_with(name: 'password').value = password
-          page = form.submit form.buttons.first
+          agent.get(url)
+          set_fields(username, password)
           page.body
         rescue => error
           puts "failed to fetch data from url '#{url}': #{error}"
