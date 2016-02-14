@@ -53,7 +53,7 @@ module GithubContributionsGraph
       load_days(name, palette)
     end
 
-    def_delegators :@days, :each, :each_with_index, :length, :[], :first
+    def_delegators :@days, :each, :each_with_index, :each_with_object, :length, :[], :first, :map
 
     def load_days(name, palette)
       store(name).each do |date, commits|
