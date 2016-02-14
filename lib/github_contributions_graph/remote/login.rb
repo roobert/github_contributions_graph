@@ -12,6 +12,7 @@ module GithubContributionsGraph
         def self.data(url, username, password)
           agent.get(url)
           set_fields(username, password)
+          raise StandardError, "login failure" if page.body =~ /Invalid.*login credentials/
           page.body
         rescue => error
           puts "failed to fetch data from url '#{url}': #{error}"

@@ -11,7 +11,7 @@ repo_public = repos.select { |repo| repo.name == "public" }[0]
 repo_work   = repos.select { |repo| repo.name == "work" }[0]
 
 if repo_public.days.length != repo_work.days.length
-  raise InputError, "contributions contain different amount of days"
+  raise StandardError, "contributions contain different amount of days"
 end
 
 merged = []
